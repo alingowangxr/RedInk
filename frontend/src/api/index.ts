@@ -1,6 +1,19 @@
 import axios from 'axios'
+import { getCurrentLocale } from '../i18n'
 
 const API_BASE_URL = '/api'
+
+// 创建 axios 实例
+const apiClient = axios.create({
+  baseURL: API_BASE_URL,
+})
+
+// 请求拦截器：自动添加语言头
+apiClient.interceptors.request.use((config) => {
+  const locale = getCurrentLocale()
+  config.headers['Accept-Language'] = locale
+  return config
+})
 
 export interface Page {
   index: number
@@ -43,8 +56,8 @@ export async function generateOutline(
       formData.append('images', file)
     })
 
-    const response = await axios.post<OutlineResponse & { has_images?: boolean }>(
-      `${API_BASE_URL}/outline`,
+    const response = await apiClient.post<OutlineResponse & { has_images?: boolean }>(
+      '/outline',
       formData,
       {
         headers: {
@@ -56,7 +69,7 @@ export async function generateOutline(
   }
 
   // 无图片，使用 JSON
-  const response = await axios.post<OutlineResponse>(`${API_BASE_URL}/outline`, {
+  const response = await apiClient.post<OutlineResponse>('/outline', {
     topic
   })
   return response.data
@@ -79,7 +92,7 @@ export async function regenerateImage(
     userTopic?: string
   }
 ): Promise<{ success: boolean; index: number; image_url?: string; error?: string }> {
-  const response = await axios.post(`${API_BASE_URL}/regenerate`, {
+  const response = await apiClient.post('/regenerate', {
     task_id: taskId,
     page,
     use_reference: useReference,
@@ -104,6 +117,7 @@ export async function retryFailedImages(
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Accept-Language': getCurrentLocale(),
       },
       body: JSON.stringify({
         task_id: taskId,
@@ -262,7 +276,7 @@ export async function createHistory(
   taskId?: string
 ): Promise<{ success: boolean; record_id?: string; error?: string }> {
   try {
-    const response = await axios.post(
+    const response = await apiClient.post(
       `${API_BASE_URL}/history`,
       {
         topic,
@@ -317,7 +331,7 @@ export async function getHistoryList(
     const params: any = { page, page_size: pageSize }
     if (status) params.status = status
 
-    const response = await axios.get(`${API_BASE_URL}/history`, {
+    const response = await apiClient.get(`${API_BASE_URL}/history`, {
       params,
       timeout: 10000 // 10秒超时
     })
@@ -384,7 +398,7 @@ export async function getHistory(recordId: string): Promise<{
   error?: string
 }> {
   try {
-    const response = await axios.get(`${API_BASE_URL}/history/${recordId}`, {
+    const response = await apiClient.get(`${API_BASE_URL}/history/${recordId}`, {
       timeout: 10000 // 10秒超时
     })
     return response.data
@@ -446,7 +460,7 @@ export async function updateHistory(
   data: UpdateHistoryParams
 ): Promise<{ success: boolean; error?: string }> {
   try {
-    const response = await axios.put(
+    const response = await apiClient.put(
       `${API_BASE_URL}/history/${recordId}`,
       data,
       {
@@ -494,7 +508,7 @@ export async function updateHistory(
 export async function checkHistoryExists(recordId: string): Promise<boolean> {
   try {
     // 使用专用的 /exists 端点，避免获取完整记录数据
-    const response = await axios.get(
+    const response = await apiClient.get(
       `${API_BASE_URL}/history/${recordId}/exists`,
       {
         timeout: 5000 // 5秒超时
@@ -520,7 +534,7 @@ export async function deleteHistory(recordId: string): Promise<{
   error?: string
 }> {
   try {
-    const response = await axios.delete(
+    const response = await apiClient.delete(
       `${API_BASE_URL}/history/${recordId}`,
       {
         timeout: 10000 // 10秒超时
@@ -557,7 +571,7 @@ export async function searchHistory(keyword: string): Promise<{
   error?: string
 }> {
   try {
-    const response = await axios.get(`${API_BASE_URL}/history/search`, {
+    const response = await apiClient.get(`${API_BASE_URL}/history/search`, {
       params: { keyword },
       timeout: 10000 // 10秒超时
     })
@@ -591,7 +605,7 @@ export async function getHistoryStats(): Promise<{
   error?: string
 }> {
   try {
-    const response = await axios.get(`${API_BASE_URL}/history/stats`, {
+    const response = await apiClient.get(`${API_BASE_URL}/history/stats`, {
       timeout: 10000 // 10秒超时
     })
     return response.data
@@ -643,6 +657,7 @@ export async function generateImagesPost(
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Accept-Language': getCurrentLocale(),
       },
       body: JSON.stringify({
         pages,

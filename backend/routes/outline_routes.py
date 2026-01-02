@@ -10,6 +10,7 @@ import base64
 import logging
 from flask import Blueprint, request, jsonify
 from backend.services.outline import get_outline_service
+from backend.i18n import gettext as _
 from .utils import log_request, log_error
 
 logger = logging.getLogger(__name__)
@@ -51,7 +52,7 @@ def create_outline_blueprint():
                 logger.warning("大纲生成请求缺少 topic 参数")
                 return jsonify({
                     "success": False,
-                    "error": "参数错误：topic 不能为空。\n请提供要生成图文的主题内容。"
+                    "error": _('topic_required_detail')
                 }), 400
 
             # 调用大纲生成服务
@@ -73,7 +74,7 @@ def create_outline_blueprint():
             error_msg = str(e)
             return jsonify({
                 "success": False,
-                "error": f"大纲生成异常。\n错误详情: {error_msg}\n建议：检查后端日志获取更多信息"
+                "error": _('outline_exception', error=error_msg)
             }), 500
 
     return outline_bp

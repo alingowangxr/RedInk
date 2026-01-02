@@ -12,6 +12,7 @@ import yaml
 from pathlib import Path
 from typing import Dict, List, Any, Optional
 from backend.utils.text_client import get_text_chat_client
+from backend.i18n import load_prompt_template
 
 logger = logging.getLogger(__name__)
 
@@ -94,14 +95,8 @@ class ContentService:
         return get_text_chat_client(provider_config)
 
     def _load_prompt_template(self) -> str:
-        """加载提示词模板"""
-        prompt_path = os.path.join(
-            os.path.dirname(os.path.dirname(__file__)),
-            "prompts",
-            "content_prompt.txt"
-        )
-        with open(prompt_path, "r", encoding="utf-8") as f:
-            return f.read()
+        """加载内容提示词模板（根据当前语言动态加载）"""
+        return load_prompt_template('content_prompt.txt')
 
     def _parse_json_response(self, response_text: str) -> Dict[str, Any]:
         """解析 AI 返回的 JSON 响应"""

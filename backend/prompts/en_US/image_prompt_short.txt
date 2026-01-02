@@ -1,0 +1,14 @@
+Generate a Xiaohongshu-style image.
+
+Page type: {page_type}
+Content: {page_content}
+
+Requirements:
+- Xiaohongshu graphic style
+- 3:4 vertical ratio
+- Clear text, harmonious colors
+- Professional design sense
+- Remove any watermarks/logos
+- Maintain style consistency with cover
+
+Directly generate the image.

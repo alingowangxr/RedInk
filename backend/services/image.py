@@ -9,6 +9,7 @@ from typing import Dict, Any, Generator, List, Optional, Tuple
 from backend.config import Config
 from backend.generators.factory import ImageGeneratorFactory
 from backend.utils.image_compressor import compress_image
+from backend.i18n import load_prompt_template
 
 logger = logging.getLogger(__name__)
 
@@ -68,18 +69,14 @@ class ImageService:
         logger.info(f"ImageService 初始化完成: provider={provider_name}, type={provider_type}")
 
     def _load_prompt_template(self, short: bool = False) -> str:
-        """加载 Prompt 模板"""
+        """加载图片提示词模板（根据当前语言动态加载）"""
         filename = "image_prompt_short.txt" if short else "image_prompt.txt"
-        prompt_path = os.path.join(
-            os.path.dirname(os.path.dirname(__file__)),
-            "prompts",
-            filename
-        )
-        if not os.path.exists(prompt_path):
-            # 如果短模板不存在，返回空字符串
+        try:
+            return load_prompt_template(filename)
+        except FileNotFoundError:
+            # 如果模板不存在（例如短模板），返回空字符串
+            logger.warning(f"提示词模板不存在: {filename}")
             return ""
-        with open(prompt_path, "r", encoding="utf-8") as f:
-            return f.read()
 
     def _save_image(self, image_data: bytes, filename: str, task_dir: str = None) -> str:
         """

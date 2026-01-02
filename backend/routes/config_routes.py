@@ -11,6 +11,7 @@ import logging
 from pathlib import Path
 import yaml
 from flask import Blueprint, request, jsonify
+from backend.i18n import gettext as _
 from .utils import prepare_providers_for_response
 
 logger = logging.getLogger(__name__)
@@ -72,7 +73,7 @@ def create_config_blueprint():
         except Exception as e:
             return jsonify({
                 "success": False,
-                "error": f"获取配置失败: {str(e)}"
+                "error": _('get_config_failed', error=str(e))
             }), 500
 
     @config_bp.route('/config', methods=['POST'])
@@ -110,13 +111,13 @@ def create_config_blueprint():
 
             return jsonify({
                 "success": True,
-                "message": "配置已保存"
+                "message": _('config_saved')
             })
 
         except Exception as e:
             return jsonify({
                 "success": False,
-                "error": f"更新配置失败: {str(e)}"
+                "error": _('update_config_failed', error=str(e))
             }), 500
 
     # ==================== 连接测试 ====================
@@ -143,7 +144,7 @@ def create_config_blueprint():
             provider_name = data.get('provider_name')
 
             if not provider_type:
-                return jsonify({"success": False, "error": "缺少 type 参数"}), 400
+                return jsonify({"success": False, "error": _('type_required')}), 400
 
             # 构建配置
             config = {
@@ -157,7 +158,7 @@ def create_config_blueprint():
                 config = _load_provider_config(provider_type, provider_name, config)
 
             if not config['api_key']:
-                return jsonify({"success": False, "error": "API Key 未配置"}), 400
+                return jsonify({"success": False, "error": _('api_key_not_configured')}), 400
 
             # 根据类型执行测试
             result = _test_provider_connection(provider_type, config)
@@ -299,7 +300,7 @@ def _test_provider_connection(provider_type: str, config: dict) -> dict:
         return _test_image_api(config)
 
     else:
-        raise ValueError(f"不支持的类型: {provider_type}")
+        raise ValueError(_('unsupported_type', provider_type=provider_type))
 
 
 def _test_google_genai(config: dict) -> dict:
@@ -320,14 +321,14 @@ def _test_google_genai(config: dict) -> dict:
             list(client.models.list())
             return {
                 "success": True,
-                "message": "连接成功！仅代表连接稳定，不确定是否可以稳定支持图片生成"
+                "message": _('connection_success_unstable')
             }
         except Exception as e:
-            raise Exception(f"连接测试失败: {str(e)}")
+            raise Exception(_('connection_test_failed', error=str(e)))
     else:
         return {
             "success": True,
-            "message": "Vertex AI 无法通过 API Key 测试连接（需要 OAuth2 认证）。请在实际生成图片时验证配置是否正确。"
+            "message": _('vertex_ai_no_test')
         }
 
 
@@ -408,7 +409,7 @@ def _test_image_api(config: dict) -> dict:
     if response.status_code == 200:
         return {
             "success": True,
-            "message": "连接成功！仅代表连接稳定，不确定是否可以稳定支持图片生成"
+            "message": _('connection_success_unstable')
         }
     else:
         raise Exception(f"HTTP {response.status_code}: {response.text[:200]}")
@@ -419,10 +420,10 @@ def _check_response(result_text: str) -> dict:
     if "你好" in result_text and "红墨" in result_text:
         return {
             "success": True,
-            "message": f"连接成功！响应: {result_text[:100]}"
+            "message": _('connection_success_response', response=result_text[:100])
         }
     else:
         return {
             "success": True,
-            "message": f"连接成功，但响应内容不符合预期: {result_text[:100]}"
+            "message": _('connection_success_unexpected', response=result_text[:100])
         }

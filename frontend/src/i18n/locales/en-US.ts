@@ -1,0 +1,321 @@
+export default {
+  // Common
+  common: {
+    confirm: 'Confirm',
+    cancel: 'Cancel',
+    save: 'Save',
+    delete: 'Delete',
+    download: 'Download',
+    loading: 'Loading...',
+    success: 'Success',
+    error: 'Error',
+    edit: 'Edit',
+    add: 'Add',
+    remove: 'Remove',
+    search: 'Search',
+    filter: 'Filter',
+    reset: 'Reset',
+    submit: 'Submit',
+    close: 'Close',
+    back: 'Back',
+    next: 'Next',
+    previous: 'Previous',
+    finish: 'Finish',
+    retry: 'Retry',
+    copy: 'Copy',
+    copied: 'Copied',
+    preview: 'Preview',
+    // Accessibility and Alt Text
+    pageNumber: 'Page {index}',
+    imageNumber: 'Image {index}',
+    coverNumber: 'Cover {index}',
+    logoAlt: 'RedInk - Inspire in an Instant',
+  },
+
+  // Navigation
+  nav: {
+    home: 'Studio',
+    history: 'History',
+    settings: 'Settings',
+  },
+
+  // Home Page
+  home: {
+    brandPill: 'AI-Powered RedInk Creator',
+    title: 'Inspire in an Instant',
+    subtitle: 'Enter your creative topic and let AI generate viral titles, content, and cover images',
+    slogan: 'Making sharing accessible, making creation effortless',
+    placeholder: 'Enter topic, e.g., Fall nail designs...',
+    generateButton: 'Generate Outline',
+    uploadHint: 'These images will be used for cover generation and content reference',
+    errors: {
+      generateFailed: 'Failed to generate outline',
+      networkError: 'Network error, please try again',
+      createHistoryFailed: 'Failed to create history record:',
+      createHistoryException: 'Exception while creating history record:',
+    },
+  },
+
+  // Composer Input
+  composer: {
+    placeholder: 'Enter topic, e.g., Fall nail designs...',
+    uploadHint: 'These images will be used for cover generation and content reference',
+    generateButton: 'Generate Outline',
+  },
+
+  // Outline Editing
+  outline: {
+    title: 'Edit Outline',
+    subtitle: 'Adjust page order, edit content, and perfect your creation',
+    pageCount: '{count} pages',
+    addPage: 'Add Page',
+    deletePage: 'Delete Page',
+    deleteConfirm: 'Are you sure you want to delete this page?',
+    generateImages: 'Generate Images',
+    backButton: 'Back',
+    savingStatus: 'Saving...',
+    savedStatus: 'Saved',
+    placeholder: 'Enter content here...',
+    characterCount: '{count} chars',
+    pageType: {
+      cover: 'Cover',
+      content: 'Content',
+      summary: 'Summary',
+    },
+  },
+
+  // Generating Progress
+  generating: {
+    title: 'Generation Results',
+    progressTitle: 'Progress',
+    currentProgress: 'Generating page {current} / {total}',
+    failedCount: '{count} images failed, click to retry',
+    completedAll: 'All {total} images completed',
+    retryingAll: 'Retrying...',
+    retryAllButton: 'Retry All Failed',
+    backToOutline: 'Back to Outline',
+    status: {
+      generating: 'Generating...',
+      retrying: 'Retrying...',
+      failed: 'Failed',
+      waiting: 'Waiting',
+      completed: 'Completed',
+      error: 'Error',
+    },
+    actions: {
+      retry: 'Click to Retry',
+      regenerate: 'Regenerate',
+    },
+    pageLabel: 'Page {index}',
+    errors: {
+      generateFailed: 'Generation failed:',
+      retryFailed: 'Retry failed:',
+    },
+  },
+
+  // Result Page
+  result: {
+    title: 'Creation Complete',
+    subtitle: 'Congratulations! Your content has been generated, total {count} images',
+    downloadAll: 'Download All',
+    regenerate: 'Regenerate',
+    regenerating: 'Regenerating...',
+    startOver: 'Start Over',
+    preview: 'Preview',
+    download: 'Download',
+    pageLabel: 'Page {index}',
+    errors: {
+      pageNotFound: 'Cannot find content for this page',
+      regenerateFailed: 'Regeneration failed:',
+    },
+    content: {
+      generateButton: 'Generate Titles, Copy & Tags',
+      generating: 'Generating...',
+      retry: 'Retry',
+      title: 'Titles',
+      copywriting: 'Copywriting',
+      tags: 'Tags',
+      generatingStatus: 'Generating titles, copy, and tags...',
+      failedStatus: 'Generation failed, please retry',
+      titleLabel: {
+        recommended: 'Recommended',
+        alternative: 'Option {index}',
+      },
+      copyAll: 'Copy All',
+      copyTitle: 'Click to Copy',
+    },
+  },
+
+  // History
+  history: {
+    title: 'My Creations',
+    newProject: 'New Project',
+    syncHistory: 'Sync History',
+    syncing: 'Syncing...',
+    searchPlaceholder: 'Search titles...',
+    tabs: {
+      all: 'All',
+      completed: 'Completed',
+      draft: 'Drafts',
+    },
+    stats: {
+      total: 'Total Works',
+      completed: 'Completed',
+      draft: 'Drafts',
+    },
+    empty: 'No records found',
+    emptyTip: 'Create your first work',
+    status: {
+      draft: 'Draft',
+      completed: 'Completed',
+      generating: 'Generating',
+    },
+    actions: {
+      preview: 'Preview',
+      edit: 'Edit',
+      viewOutline: 'View Outline',
+      download: 'Download All',
+      regenerate: 'Regenerate',
+      delete: 'Delete',
+    },
+    deleteConfirm: 'Are you sure you want to delete?',
+    pagination: {
+      previous: 'Previous',
+      next: 'Next',
+    },
+    errors: {
+      regenerateNoTask: 'Cannot regenerate: missing task information',
+      regenerateFailed: 'Regeneration failed:',
+    },
+    scan: {
+      title: 'Scan Complete!',
+      totalTasks: 'Total tasks:',
+      syncSuccess: 'Synced successfully:',
+      syncFailed: 'Sync failed:',
+      orphanTasks: 'Orphan tasks (no record):',
+      scanFailed: 'Scan failed:',
+    },
+    gallery: {
+      imageCount: '{count} images ·',
+      expand: 'Expand',
+      collapse: 'Collapse',
+      waiting: 'Waiting...',
+    },
+    outlineModal: {
+      title: 'Complete Outline',
+      characterCount: '{count} chars',
+    },
+  },
+
+  // Settings
+  settings: {
+    title: 'Settings',
+    subtitle: 'Configure text generation and image generation API services',
+    loadingConfig: 'Loading configuration...',
+    textGeneration: {
+      title: 'Text Generation',
+      description: 'For generating content outlines',
+    },
+    imageGeneration: {
+      title: 'Image Generation',
+      description: 'For generating cover images',
+    },
+    addProvider: 'Add',
+    testConnection: 'Test Connection',
+    testing: 'Testing...',
+    save: 'Save',
+    cancel: 'Cancel',
+    provider: {
+      status: 'Status',
+      name: 'Name',
+      model: 'Model',
+      apiKey: 'API Key',
+      actions: 'Actions',
+      active: 'Active',
+      activate: 'Activate',
+      unconfigured: 'Unconfigured',
+      edit: 'Edit',
+      delete: 'Delete',
+      modalTitle: {
+        add: 'Add Provider',
+        edit: 'Edit Provider',
+      },
+      form: {
+        name: 'Provider Name',
+        namePlaceholder: 'e.g., openai',
+        nameHint: 'Unique identifier for different providers',
+        type: 'Type',
+        typeOptions: {
+          openai: 'OpenAI Compatible',
+          googleGemini: 'Google Gemini',
+          googleGenai: 'Google GenAI',
+        },
+        apiKey: 'API Key',
+        apiKeyPlaceholder: 'Enter API Key',
+        apiKeyConfigured: 'API Key configured, leave empty to keep current',
+        baseUrl: 'Base URL',
+        baseUrlPlaceholder: {
+          openai: 'e.g., https://api.openai.com',
+          gemini: 'e.g., https://generativelanguage.googleapis.com',
+        },
+        baseUrlPreview: 'Preview:',
+        model: 'Model',
+        modelPlaceholder: {
+          openai: 'e.g., gpt-4o',
+          gemini: 'e.g., gemini-2.0-flash-exp',
+          image: 'e.g., imagen-3.0-generate-002',
+          imageApi: 'e.g., flux-pro',
+        },
+        endpoint: 'API Endpoint Path',
+        endpointPlaceholder: {
+          text: 'e.g., /v1/chat/completions',
+          image: 'e.g., /v1/images/generations or /v1/chat/completions',
+        },
+        endpointHint: {
+          text: 'Default endpoint: /v1/chat/completions (used by most OpenAI compatible APIs)',
+          image: 'Common endpoints: /v1/images/generations (standard), /v1/chat/completions (link-based APIs)',
+        },
+        highConcurrency: 'High Concurrency Mode',
+        highConcurrencyHint: 'Enable parallel image generation for faster results. Not recommended for GCP $300 trial accounts.',
+        shortPrompt: 'Short Prompt Mode',
+        shortPromptHint: 'Use simplified prompts for APIs with character limits (e.g., 1600 char limit).',
+      },
+      validation: {
+        nameRequired: 'Please enter provider name',
+        typeRequired: 'Please select provider type',
+        apiKeyRequired: 'Please enter API Key',
+      },
+      deleteConfirm: 'Are you sure you want to delete provider "{name}"?',
+      testSuccess: '✅ ',
+      testFailed: '❌ Connection failed:',
+      loadConfigFailed: 'Failed to load configuration:',
+      autoSaveFailed: 'Auto-save failed:',
+    },
+  },
+
+  // Error Messages
+  errors: {
+    networkError: 'Network connection failed, please check your network settings',
+    timeout: 'Request timeout, please check your network connection',
+    createHistoryFailed: 'Failed to create history record',
+    getHistoryListFailed: 'Failed to get history list',
+    historyNotFound: 'History record not found',
+    getHistoryDetailFailed: 'Failed to get history details',
+    updateHistoryFailed: 'Failed to update history record',
+    deleteHistoryFailed: 'Failed to delete history record',
+    searchHistoryFailed: 'Failed to search history',
+    getStatsFailed: 'Failed to get statistics',
+    unknownError: 'Unknown error, please try again later',
+    cannotReadStream: 'Cannot read response stream',
+    parseSSEFailed: 'Failed to parse SSE data:',
+    httpError: 'HTTP error! status: {status}',
+  },
+
+  // Footer
+  footer: {
+    tip: 'Configuration issues? Visit',
+    tipLink: 'official site for instant experience',
+    copyright: '© 2025 RedInk by Mozi (Histone)',
+    license: 'Licensed under',
+  },
+}

@@ -1,0 +1,321 @@
+export default {
+  // 通用
+  common: {
+    confirm: '确定',
+    cancel: '取消',
+    save: '保存',
+    delete: '删除',
+    download: '下载',
+    loading: '加载中...',
+    success: '成功',
+    error: '错误',
+    edit: '编辑',
+    add: '添加',
+    remove: '移除',
+    search: '搜索',
+    filter: '筛选',
+    reset: '重置',
+    submit: '提交',
+    close: '关闭',
+    back: '返回',
+    next: '下一步',
+    previous: '上一步',
+    finish: '完成',
+    retry: '重试',
+    copy: '复制',
+    copied: '已复制',
+    preview: '预览',
+    // 無障礙和 Alt 文本
+    pageNumber: '第 {index} 页',
+    imageNumber: '图片 {index}',
+    coverNumber: '封面 {index}',
+    logoAlt: '红墨 - 灵感一触即发',
+  },
+
+  // 导航
+  nav: {
+    home: '创作中心',
+    history: '历史记录',
+    settings: '系统设置',
+  },
+
+  // 首页
+  home: {
+    brandPill: 'AI 驱动的红墨创作助手',
+    title: '灵感一触即发',
+    subtitle: '输入你的创意主题，让 AI 帮你生成爆款标题、正文和封面图',
+    slogan: '让传播不再需要门槛，让创作从未如此简单',
+    placeholder: '输入主题，例如：秋季显白美甲...',
+    generateButton: '生成大纲',
+    uploadHint: '这些图片将用于生成封面和内容参考',
+    errors: {
+      generateFailed: '生成大纲失败',
+      networkError: '网络错误，请重试',
+      createHistoryFailed: '创建历史记录失败：',
+      createHistoryException: '创建历史记录异常：',
+    },
+  },
+
+  // 输入组件
+  composer: {
+    placeholder: '输入主题，例如：秋季显白美甲...',
+    uploadHint: '这些图片将用于生成封面和内容参考',
+    generateButton: '生成大纲',
+  },
+
+  // 大纲编辑
+  outline: {
+    title: '编辑大纲',
+    subtitle: '调整页面顺序，修改文案，打造完美内容',
+    pageCount: '共 {count} 页',
+    addPage: '添加页面',
+    deletePage: '删除页面',
+    deleteConfirm: '确定要删除这一页吗？',
+    generateImages: '开始生成图片',
+    backButton: '上一步',
+    savingStatus: '保存中...',
+    savedStatus: '已保存',
+    placeholder: '在此输入文案...',
+    characterCount: '{count} 字',
+    pageType: {
+      cover: '封面',
+      content: '内容',
+      summary: '总结',
+    },
+  },
+
+  // 生成进度
+  generating: {
+    title: '生成结果',
+    progressTitle: '生成进度',
+    currentProgress: '正在生成第 {current} / {total} 页',
+    failedCount: '{count} 张图片生成失败，可点击重试',
+    completedAll: '全部 {total} 张图片生成完成',
+    retryingAll: '补全中...',
+    retryAllButton: '一键补全失败图片',
+    backToOutline: '返回大纲',
+    status: {
+      generating: '生成中...',
+      retrying: '重试中...',
+      failed: '生成失败',
+      waiting: '等待中',
+      completed: '已完成',
+      error: '失败',
+    },
+    actions: {
+      retry: '点击重试',
+      regenerate: '重新生成',
+    },
+    pageLabel: 'Page {index}',
+    errors: {
+      generateFailed: '生成失败：',
+      retryFailed: '重试失败：',
+    },
+  },
+
+  // 结果页
+  result: {
+    title: '创作完成',
+    subtitle: '恭喜！你的小红书图文已生成完毕，共 {count} 张',
+    downloadAll: '一键下载',
+    regenerate: '重新生成',
+    regenerating: '重绘中...',
+    startOver: '再来一篇',
+    preview: '预览大图',
+    download: '下载',
+    pageLabel: 'Page {index}',
+    errors: {
+      pageNotFound: '无法找到对应页面的内容',
+      regenerateFailed: '重绘失败：',
+    },
+    content: {
+      generateButton: '生成标题、文案和标签',
+      generating: '生成中...',
+      retry: '重新生成',
+      title: '标题',
+      copywriting: '文案',
+      tags: '标签',
+      generatingStatus: '正在生成标题、文案和标签...',
+      failedStatus: '生成失败，请重试',
+      titleLabel: {
+        recommended: '推荐',
+        alternative: '备选{index}',
+      },
+      copyAll: '复制全部',
+      copyTitle: '点击复制',
+    },
+  },
+
+  // 历史记录
+  history: {
+    title: '我的创作',
+    newProject: '新建图文',
+    syncHistory: '同步历史',
+    syncing: '同步中...',
+    searchPlaceholder: '搜索标题...',
+    tabs: {
+      all: '全部',
+      completed: '已完成',
+      draft: '草稿箱',
+    },
+    stats: {
+      total: '总作品数',
+      completed: '已完成',
+      draft: '草稿箱',
+    },
+    empty: '暂无相关记录',
+    emptyTip: '去创建一个新的作品吧',
+    status: {
+      draft: '草稿',
+      completed: '已完成',
+      generating: '生成中',
+    },
+    actions: {
+      preview: '预览',
+      edit: '编辑',
+      viewOutline: '查看大纲',
+      download: '打包下载',
+      regenerate: '重新生成',
+      delete: '删除',
+    },
+    deleteConfirm: '确定删除吗？',
+    pagination: {
+      previous: 'Previous',
+      next: 'Next',
+    },
+    errors: {
+      regenerateNoTask: '无法重新生成：缺少任务信息',
+      regenerateFailed: '重新生成失败：',
+    },
+    scan: {
+      title: '扫描完成！',
+      totalTasks: '总任务数：',
+      syncSuccess: '同步成功：',
+      syncFailed: '同步失败：',
+      orphanTasks: '孤立任务（无记录）：',
+      scanFailed: '扫描失败：',
+    },
+    gallery: {
+      imageCount: '{count} 张图片 ·',
+      expand: '展开',
+      collapse: '收起',
+      waiting: 'Waiting...',
+    },
+    outlineModal: {
+      title: '完整大纲',
+      characterCount: '{count} 字',
+    },
+  },
+
+  // 系统设置
+  settings: {
+    title: '系统设置',
+    subtitle: '配置文本生成和图片生成的 API 服务',
+    loadingConfig: '加载配置中...',
+    textGeneration: {
+      title: '文本生成配置',
+      description: '用于生成小红书图文大纲',
+    },
+    imageGeneration: {
+      title: '图片生成配置',
+      description: '用于生成小红书配图',
+    },
+    addProvider: '添加',
+    testConnection: '测试连接',
+    testing: '测试中...',
+    save: '保存',
+    cancel: '取消',
+    provider: {
+      status: '状态',
+      name: '名称',
+      model: '模型',
+      apiKey: 'API Key',
+      actions: '操作',
+      active: '已激活',
+      activate: '激活',
+      unconfigured: '未配置',
+      edit: '编辑',
+      delete: '删除',
+      modalTitle: {
+        add: '添加服务商',
+        edit: '编辑服务商',
+      },
+      form: {
+        name: '服务商名称',
+        namePlaceholder: '例如: openai',
+        nameHint: '唯一标识，用于区分不同服务商',
+        type: '类型',
+        typeOptions: {
+          openai: 'OpenAI 兼容接口',
+          googleGemini: 'Google Gemini',
+          googleGenai: 'Google GenAI',
+        },
+        apiKey: 'API Key',
+        apiKeyPlaceholder: '输入 API Key',
+        apiKeyConfigured: '已配置 API Key，留空表示不修改',
+        baseUrl: 'Base URL',
+        baseUrlPlaceholder: {
+          openai: '例如: https://api.openai.com',
+          gemini: '例如: https://generativelanguage.googleapis.com',
+        },
+        baseUrlPreview: '预览：',
+        model: '模型',
+        modelPlaceholder: {
+          openai: '例如: gpt-4o',
+          gemini: '例如: gemini-2.0-flash-exp',
+          image: '例如: imagen-3.0-generate-002',
+          imageApi: '例如: flux-pro',
+        },
+        endpoint: 'API 端点路径',
+        endpointPlaceholder: {
+          text: '例如: /v1/chat/completions',
+          image: '例如: /v1/images/generations 或 /v1/chat/completions',
+        },
+        endpointHint: {
+          text: '默认端点：/v1/chat/completions（大多数 OpenAI 兼容 API 使用此端点）',
+          image: '常用端点：/v1/images/generations（标准图片生成）、/v1/chat/completions（即梦等返回链接的 API）',
+        },
+        highConcurrency: '高并发模式',
+        highConcurrencyHint: '启用后将并行生成图片，速度更快但对 API 质量要求较高。GCP 300$ 试用账号不建议启用。',
+        shortPrompt: '短 Prompt 模式',
+        shortPromptHint: '启用后使用精简版提示词，适合有字符限制的 API（如即梦 1600 字符限制）。',
+      },
+      validation: {
+        nameRequired: '请填写服务商名称',
+        typeRequired: '请选择服务商类型',
+        apiKeyRequired: '请填写 API Key',
+      },
+      deleteConfirm: '确定要删除服务商 "{name}" 吗？',
+      testSuccess: '✅ ',
+        testFailed: '❌ 连接失败：',
+      loadConfigFailed: '加载配置失败：',
+      autoSaveFailed: '自动保存失败:',
+    },
+  },
+
+  // 错误消息
+  errors: {
+    networkError: '网络连接失败，请检查网络设置',
+    timeout: '请求超时，请检查网络连接',
+    createHistoryFailed: '创建历史记录失败',
+    getHistoryListFailed: '获取历史记录列表失败',
+    historyNotFound: '历史记录不存在',
+    getHistoryDetailFailed: '获取历史记录详情失败',
+    updateHistoryFailed: '更新历史记录失败',
+    deleteHistoryFailed: '删除历史记录失败',
+    searchHistoryFailed: '搜索历史记录失败',
+    getStatsFailed: '获取统计信息失败',
+    unknownError: '未知错误，请稍后重试',
+    cannotReadStream: '无法读取响应流',
+    parseSSEFailed: '解析 SSE 数据失败:',
+    httpError: 'HTTP error! status: {status}',
+  },
+
+  // 页脚
+  footer: {
+    tip: '配置不成功？访问',
+    tipLink: '官方站点即刻体验',
+    copyright: '© 2025 RedInk by 默子 (Histone)',
+    license: 'Licensed under',
+  },
+}

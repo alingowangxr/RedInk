@@ -8,13 +8,13 @@
       <div class="hero-content">
         <div class="brand-pill">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
-          AI 驱动的红墨创作助手
+          {{ t('home.brandPill') }}
         </div>
         <div class="platform-slogan">
-          让传播不再需要门槛，让创作从未如此简单
+          {{ t('home.slogan') }}
         </div>
-        <h1 class="page-title">灵感一触即发</h1>
-        <p class="page-subtitle">输入你的创意主题，让 AI 帮你生成爆款标题、正文和封面图</p>
+        <h1 class="page-title">{{ t('home.title') }}</h1>
+        <p class="page-subtitle">{{ t('home.subtitle') }}</p>
       </div>
 
       <!-- 主题输入组合框 -->
@@ -30,13 +30,13 @@
     <!-- 版权信息 -->
     <div class="page-footer">
       <div class="footer-tip">
-        配置不成功？访问 <a href="https://redink.top" target="_blank" rel="noopener noreferrer">redink.top</a> 官方站点即刻体验
+        {{ t('footer.tip') }} <a href="https://redink.top" target="_blank" rel="noopener noreferrer">redink.top</a> {{ t('footer.tipLink') }}
       </div>
       <div class="footer-copyright">
-        © 2025 <a href="https://github.com/HisMax/RedInk" target="_blank" rel="noopener noreferrer">RedInk</a> by 默子 (Histone)
+        {{ t('footer.copyright') }}
       </div>
       <div class="footer-license">
-        Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a>
+        {{ t('footer.license') }} <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a>
       </div>
     </div>
 
@@ -51,6 +51,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { useGeneratorStore } from '../stores/generator'
 import { generateOutline, createHistory } from '../api'
 
@@ -58,6 +59,7 @@ import { generateOutline, createHistory } from '../api'
 import ShowcaseBackground from '../components/home/ShowcaseBackground.vue'
 import ComposerInput from '../components/home/ComposerInput.vue'
 
+const { t } = useI18n()
 const router = useRouter()
 const store = useGeneratorStore()
 
@@ -137,10 +139,10 @@ async function handleGenerate() {
 
       router.push('/outline')
     } else {
-      error.value = result.error || '生成大纲失败'
+      error.value = result.error || t('home.errors.generateFailed')
     }
   } catch (err: any) {
-    error.value = err.message || '网络错误，请重试'
+    error.value = err.message || t('home.errors.networkError')
   } finally {
     loading.value = false
   }

@@ -2,16 +2,16 @@
   <div class="container">
     <div class="page-header">
       <div>
-        <h1 class="page-title">创作完成</h1>
-        <p class="page-subtitle">恭喜！你的小红书图文已生成完毕，共 {{ store.images.length }} 张</p>
+        <h1 class="page-title">{{ t('result.title') }}</h1>
+        <p class="page-subtitle">{{ t('result.subtitle', { count: store.images.length }) }}</p>
       </div>
       <div style="display: flex; gap: 12px;">
         <button class="btn" @click="startOver" style="background: white; border: 1px solid var(--border-color);">
-          再来一篇
+          {{ t('result.startOver') }}
         </button>
         <button class="btn btn-primary" @click="downloadAll">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-          一键下载
+          {{ t('result.downloadAll') }}
         </button>
       </div>
     </div>
@@ -27,28 +27,28 @@
           >
             <img
               :src="image.url"
-              :alt="`第 ${image.index + 1} 页`"
+              :alt="t('common.pageNumber', { index: image.index + 1 })"
               style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s;"
             />
             <!-- Regenerating Overlay -->
             <div v-if="regeneratingIndex === image.index" style="position: absolute; inset: 0; background: rgba(255,255,255,0.8); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 10;">
                <div class="spinner" style="width: 24px; height: 24px; border-width: 2px; border-color: var(--primary); border-top-color: transparent;"></div>
-               <span style="font-size: 12px; color: var(--primary); margin-top: 8px; font-weight: 600;">重绘中...</span>
+               <span style="font-size: 12px; color: var(--primary); margin-top: 8px; font-weight: 600;">{{ t('result.regenerating') }}</span>
             </div>
 
             <!-- Hover Overlay -->
             <div v-else style="position: absolute; inset: 0; background: rgba(0,0,0,0.3); opacity: 0; transition: opacity 0.2s; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600;" class="hover-overlay">
-              预览大图
+              {{ t('result.preview') }}
             </div>
           </div>
 
           <!-- Action Bar -->
           <div style="padding: 12px; border-top: 1px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center;">
-            <span style="font-size: 12px; color: var(--text-sub);">Page {{ image.index + 1 }}</span>
+            <span style="font-size: 12px; color: var(--text-sub);">{{ t('result.pageLabel', { index: image.index + 1 }) }}</span>
             <div style="display: flex; gap: 8px;">
               <button
                 style="border: none; background: none; color: var(--text-sub); cursor: pointer; display: flex; align-items: center;"
-                title="重新生成此图"
+                :title="t('result.regenerate')"
                 @click="handleRegenerate(image)"
                 :disabled="regeneratingIndex === image.index"
               >
@@ -58,7 +58,7 @@
                 style="border: none; background: none; color: var(--primary); cursor: pointer; font-size: 12px;"
                 @click="downloadOne(image)"
               >
-                下载
+                {{ t('result.download') }}
               </button>
             </div>
           </div>
@@ -90,10 +90,12 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { useGeneratorStore } from '../stores/generator'
 import { regenerateImage } from '../api'
 import ContentDisplay from '../components/result/ContentDisplay.vue'
 
+const { t } = useI18n()
 const router = useRouter()
 const store = useGeneratorStore()
 const regeneratingIndex = ref<number | null>(null)
@@ -146,7 +148,7 @@ const handleRegenerate = async (image: any) => {
     // Find the page content from outline
     const pageContent = store.outline.pages.find(p => p.index === image.index)
     if (!pageContent) {
-       alert('无法找到对应页面的内容')
+       alert(t('result.errors.pageNotFound'))
        return
     }
 
@@ -161,10 +163,10 @@ const handleRegenerate = async (image: any) => {
        const newUrl = result.image_url
        store.updateImage(image.index, newUrl)
     } else {
-       alert('重绘失败: ' + (result.error || '未知错误'))
+       alert(t('result.errors.regenerateFailed') + (result.error || ''))
     }
   } catch (e: any) {
-    alert('重绘失败: ' + e.message)
+    alert(t('result.errors.regenerateFailed') + e.message)
   } finally {
     regeneratingIndex.value = null
   }

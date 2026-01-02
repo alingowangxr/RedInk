@@ -6,6 +6,7 @@ import yaml
 from pathlib import Path
 from typing import Dict, List, Any, Optional
 from backend.utils.text_client import get_text_chat_client
+from backend.i18n import load_prompt_template
 
 logger = logging.getLogger(__name__)
 
@@ -87,13 +88,8 @@ class OutlineService:
         return get_text_chat_client(provider_config)
 
     def _load_prompt_template(self) -> str:
-        prompt_path = os.path.join(
-            os.path.dirname(os.path.dirname(__file__)),
-            "prompts",
-            "outline_prompt.txt"
-        )
-        with open(prompt_path, "r", encoding="utf-8") as f:
-            return f.read()
+        """加载大纲提示词模板（根据当前语言动态加载）"""
+        return load_prompt_template('outline_prompt.txt')
 
     def _parse_outline(self, outline_text: str) -> List[Dict[str, Any]]:
         # 按 <page> 分割页面（兼容旧的 --- 分隔符）

@@ -15,6 +15,7 @@ import zipfile
 import logging
 from flask import Blueprint, request, jsonify, send_file
 from backend.services.history import get_history_service
+from backend.i18n import gettext as _
 
 logger = logging.getLogger(__name__)
 
@@ -67,7 +68,7 @@ def create_history_blueprint():
             if not topic or not outline:
                 return jsonify({
                     "success": False,
-                    "error": "参数错误：topic 和 outline 不能为空。\n请提供主题和大纲内容。"
+                    "error": _('history_create_params_required')
                 }), 400
 
             history_service = get_history_service()
@@ -82,7 +83,7 @@ def create_history_blueprint():
             error_msg = str(e)
             return jsonify({
                 "success": False,
-                "error": f"创建历史记录失败。\n错误详情: {error_msg}"
+                "error": _('history_create_failed', error=error_msg)
             }), 500
 
     @history_bp.route('/history', methods=['GET'])
@@ -118,7 +119,7 @@ def create_history_blueprint():
             error_msg = str(e)
             return jsonify({
                 "success": False,
-                "error": f"获取历史记录列表失败。\n错误详情: {error_msg}"
+                "error": _('history_list_failed', error=error_msg)
             }), 500
 
     @history_bp.route('/history/<record_id>', methods=['GET'])
@@ -140,7 +141,7 @@ def create_history_blueprint():
             if not record:
                 return jsonify({
                     "success": False,
-                    "error": f"历史记录不存在：{record_id}\n可能原因：记录已被删除或ID错误"
+                    "error": _('history_not_found_detail', record_id=record_id)
                 }), 404
 
             return jsonify({
@@ -152,7 +153,7 @@ def create_history_blueprint():
             error_msg = str(e)
             return jsonify({
                 "success": False,
-                "error": f"获取历史记录详情失败。\n错误详情: {error_msg}"
+                "error": _('history_get_failed', error=error_msg)
             }), 500
 
     @history_bp.route('/history/<record_id>/exists', methods=['GET'])
@@ -180,7 +181,7 @@ def create_history_blueprint():
             error_msg = str(e)
             return jsonify({
                 "exists": False,
-                "error": f"检查记录失败。\n错误详情: {error_msg}"
+                "error": _('history_check_failed', error=error_msg)
             }), 500
 
     @history_bp.route('/history/<record_id>', methods=['PUT'])
@@ -245,7 +246,7 @@ def create_history_blueprint():
             if not success:
                 return jsonify({
                     "success": False,
-                    "error": f"更新历史记录失败：{record_id}\n可能原因：记录不存在或数据格式错误"
+                    "error": _('history_update_not_found', record_id=record_id)
                 }), 404
 
             return jsonify({
@@ -256,7 +257,7 @@ def create_history_blueprint():
             error_msg = str(e)
             return jsonify({
                 "success": False,
-                "error": f"更新历史记录失败。\n错误详情: {error_msg}"
+                "error": _('history_update_failed', error=error_msg)
             }), 500
 
     @history_bp.route('/history/<record_id>', methods=['DELETE'])
@@ -277,7 +278,7 @@ def create_history_blueprint():
             if not success:
                 return jsonify({
                     "success": False,
-                    "error": f"删除历史记录失败：{record_id}\n可能原因：记录不存在或ID错误"
+                    "error": _('history_delete_not_found', record_id=record_id)
                 }), 404
 
             return jsonify({
@@ -288,7 +289,7 @@ def create_history_blueprint():
             error_msg = str(e)
             return jsonify({
                 "success": False,
-                "error": f"删除历史记录失败。\n错误详情: {error_msg}"
+                "error": _('history_delete_failed', error=error_msg)
             }), 500
 
     # ==================== 搜索和统计 ====================
@@ -311,7 +312,7 @@ def create_history_blueprint():
             if not keyword:
                 return jsonify({
                     "success": False,
-                    "error": "参数错误：keyword 不能为空。\n请提供搜索关键词。"
+                    "error": _('keyword_required')
                 }), 400
 
             history_service = get_history_service()
@@ -326,7 +327,7 @@ def create_history_blueprint():
             error_msg = str(e)
             return jsonify({
                 "success": False,
-                "error": f"搜索历史记录失败。\n错误详情: {error_msg}"
+                "error": _('history_search_failed', error=error_msg)
             }), 500
 
     @history_bp.route('/history/stats', methods=['GET'])
@@ -352,7 +353,7 @@ def create_history_blueprint():
             error_msg = str(e)
             return jsonify({
                 "success": False,
-                "error": f"获取历史记录统计失败。\n错误详情: {error_msg}"
+                "error": _('history_stats_failed', error=error_msg)
             }), 500
 
     # ==================== 扫描和同步 ====================
@@ -382,7 +383,7 @@ def create_history_blueprint():
             error_msg = str(e)
             return jsonify({
                 "success": False,
-                "error": f"扫描任务失败。\n错误详情: {error_msg}"
+                "error": _('scan_task_failed', error=error_msg)
             }), 500
 
     @history_bp.route('/history/scan-all', methods=['POST'])
@@ -410,7 +411,7 @@ def create_history_blueprint():
             error_msg = str(e)
             return jsonify({
                 "success": False,
-                "error": f"扫描所有任务失败。\n错误详情: {error_msg}"
+                "error": _('scan_all_failed', error=error_msg)
             }), 500
 
     # ==================== 下载功能 ====================
@@ -434,14 +435,14 @@ def create_history_blueprint():
             if not record:
                 return jsonify({
                     "success": False,
-                    "error": f"历史记录不存在：{record_id}"
+                    "error": _('history_not_found_detail', record_id=record_id)
                 }), 404
 
             task_id = record.get('images', {}).get('task_id')
             if not task_id:
                 return jsonify({
                     "success": False,
-                    "error": "该记录没有关联的任务图片"
+                    "error": _('download_no_task')
                 }), 404
 
             # 获取任务目录
@@ -449,7 +450,7 @@ def create_history_blueprint():
             if not os.path.exists(task_dir):
                 return jsonify({
                     "success": False,
-                    "error": f"任务目录不存在：{task_id}"
+                    "error": _('task_dir_not_found', task_id=task_id)
                 }), 404
 
             # 创建内存中的 ZIP 文件
@@ -471,7 +472,7 @@ def create_history_blueprint():
             error_msg = str(e)
             return jsonify({
                 "success": False,
-                "error": f"下载失败。\n错误详情: {error_msg}"
+                "error": _('download_failed', error=error_msg)
             }), 500
 
     return history_bp

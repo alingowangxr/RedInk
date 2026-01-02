@@ -15,6 +15,7 @@ import base64
 import logging
 from flask import Blueprint, request, jsonify, Response, send_file
 from backend.services.image import get_image_service
+from backend.i18n import gettext as _
 from .utils import log_request, log_error
 
 logger = logging.getLogger(__name__)
@@ -65,7 +66,7 @@ def create_image_blueprint():
                 logger.warning("图片生成请求缺少 pages 参数")
                 return jsonify({
                     "success": False,
-                    "error": "参数错误：pages 不能为空。\n请提供要生成的页面列表数据。"
+                    "error": _('pages_required')
                 }), 400
 
             logger.info(f"🖼️  开始图片生成任务: {task_id}, 共 {len(pages)} 页")
@@ -99,7 +100,7 @@ def create_image_blueprint():
             error_msg = str(e)
             return jsonify({
                 "success": False,
-                "error": f"图片生成异常。\n错误详情: {error_msg}\n建议：检查图片生成服务配置和后端日志"
+                "error": _('image_exception', error=error_msg)
             }), 500
 
     # ==================== 图片获取 ====================
@@ -146,7 +147,7 @@ def create_image_blueprint():
             if not os.path.exists(filepath):
                 return jsonify({
                     "success": False,
-                    "error": f"图片不存在：{task_id}/{filename}"
+                    "error": _('image_not_found', task_id=task_id, filename=filename)
                 }), 404
 
             return send_file(filepath, mimetype='image/png')
@@ -156,7 +157,7 @@ def create_image_blueprint():
             error_msg = str(e)
             return jsonify({
                 "success": False,
-                "error": f"获取图片失败: {error_msg}"
+                "error": _('get_image_failed', error=error_msg)
             }), 500
 
     # ==================== 重试和重新生成 ====================
@@ -190,7 +191,7 @@ def create_image_blueprint():
                 logger.warning("重试请求缺少必要参数")
                 return jsonify({
                     "success": False,
-                    "error": "参数错误：task_id 和 page 不能为空。\n请提供任务ID和页面信息。"
+                    "error": _('retry_params_required')
                 }), 400
 
             logger.info(f"🔄 重试生成图片: task={task_id}, page={page.get('index')}")
@@ -209,7 +210,7 @@ def create_image_blueprint():
             error_msg = str(e)
             return jsonify({
                 "success": False,
-                "error": f"重试图片生成失败。\n错误详情: {error_msg}"
+                "error": _('retry_single_failed', error=error_msg)
             }), 500
 
     @image_bp.route('/retry-failed', methods=['POST'])
@@ -238,7 +239,7 @@ def create_image_blueprint():
                 logger.warning("批量重试请求缺少必要参数")
                 return jsonify({
                     "success": False,
-                    "error": "参数错误：task_id 和 pages 不能为空。\n请提供任务ID和要重试的页面列表。"
+                    "error": _('retry_batch_params_required')
                 }), 400
 
             logger.info(f"🔄 批量重试失败图片: task={task_id}, 共 {len(pages)} 页")
@@ -267,7 +268,7 @@ def create_image_blueprint():
             error_msg = str(e)
             return jsonify({
                 "success": False,
-                "error": f"批量重试失败。\n错误详情: {error_msg}"
+                "error": _('retry_batch_failed', error=error_msg)
             }), 500
 
     @image_bp.route('/regenerate', methods=['POST'])
@@ -303,7 +304,7 @@ def create_image_blueprint():
                 logger.warning("重新生成请求缺少必要参数")
                 return jsonify({
                     "success": False,
-                    "error": "参数错误：task_id 和 page 不能为空。\n请提供任务ID和页面信息。"
+                    "error": _('retry_params_required')
                 }), 400
 
             logger.info(f"🔄 重新生成图片: task={task_id}, page={page.get('index')}")
@@ -326,7 +327,7 @@ def create_image_blueprint():
             error_msg = str(e)
             return jsonify({
                 "success": False,
-                "error": f"重新生成图片失败。\n错误详情: {error_msg}"
+                "error": _('regenerate_failed', error=error_msg)
             }), 500
 
     # ==================== 任务状态 ====================
@@ -353,7 +354,7 @@ def create_image_blueprint():
             if state is None:
                 return jsonify({
                     "success": False,
-                    "error": f"任务不存在：{task_id}\n可能原因：\n1. 任务ID错误\n2. 任务已过期或被清理\n3. 服务重启导致状态丢失"
+                    "error": _('task_not_found_detail', task_id=task_id)
                 }), 404
 
             # 不返回封面图片数据（太大）
@@ -372,7 +373,7 @@ def create_image_blueprint():
             error_msg = str(e)
             return jsonify({
                 "success": False,
-                "error": f"获取任务状态失败。\n错误详情: {error_msg}"
+                "error": _('get_task_state_failed', error=error_msg)
             }), 500
 
     # ==================== 健康检查 ====================
@@ -388,7 +389,7 @@ def create_image_blueprint():
         """
         return jsonify({
             "success": True,
-            "message": "服务正常运行"
+            "message": _('service_healthy')
         }), 200
 
     return image_bp

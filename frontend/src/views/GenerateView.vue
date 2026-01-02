@@ -2,11 +2,11 @@
   <div class="container">
     <div class="page-header">
       <div>
-        <h1 class="page-title">生成结果</h1>
+        <h1 class="page-title">{{ t('generating.title') }}</h1>
         <p class="page-subtitle">
-          <span v-if="isGenerating">正在生成第 {{ store.progress.current + 1 }} / {{ store.progress.total }} 页</span>
-          <span v-else-if="hasFailedImages">{{ failedCount }} 张图片生成失败，可点击重试</span>
-          <span v-else>全部 {{ store.progress.total }} 张图片生成完成</span>
+          <span v-if="isGenerating">{{ t('generating.currentProgress', { current: store.progress.current + 1, total: store.progress.total }) }}</span>
+          <span v-else-if="hasFailedImages">{{ t('generating.failedCount', { count: failedCount }) }}</span>
+          <span v-else>{{ t('generating.completedAll', { total: store.progress.total }) }}</span>
         </p>
       </div>
       <div style="display: flex; gap: 10px;">
@@ -16,17 +16,17 @@
           @click="retryAllFailed"
           :disabled="isRetrying"
         >
-          {{ isRetrying ? '补全中...' : '一键补全失败图片' }}
+          {{ isRetrying ? t('generating.retryingAll') : t('generating.retryAllButton') }}
         </button>
         <button class="btn" @click="router.push('/outline')" style="border:1px solid var(--border-color)">
-          返回大纲
+          {{ t('generating.backToOutline') }}
         </button>
       </div>
     </div>
 
     <div class="card">
       <div style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
-        <span style="font-weight: 600;">生成进度</span>
+        <span style="font-weight: 600;">{{ t('generating.progressTitle') }}</span>
         <span style="color: var(--primary); font-weight: 600;">{{ Math.round(progressPercent) }}%</span>
       </div>
       <div class="progress-container">
@@ -41,7 +41,7 @@
         <div v-for="image in store.images" :key="image.index" class="image-card">
           <!-- 图片展示区域 -->
           <div v-if="image.url && image.status === 'done'" class="image-preview">
-            <img :src="image.url" :alt="`第 ${image.index + 1} 页`" />
+            <img :src="image.url" :alt="t('common.pageNumber', { index: image.index + 1 })" />
             <!-- 重新生成按钮（悬停显示） -->
             <div class="image-overlay">
               <button
@@ -53,7 +53,7 @@
                   <path d="M23 4v6h-6"></path>
                   <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
                 </svg>
-                重新生成
+                {{ t('generating.actions.regenerate') }}
               </button>
             </div>
           </div>
@@ -61,30 +61,30 @@
           <!-- 生成中/重试中状态 -->
           <div v-else-if="image.status === 'generating' || image.status === 'retrying'" class="image-placeholder">
             <div class="spinner"></div>
-            <div class="status-text">{{ image.status === 'retrying' ? '重试中...' : '生成中...' }}</div>
+            <div class="status-text">{{ image.status === 'retrying' ? t('generating.status.retrying') : t('generating.status.generating') }}</div>
           </div>
 
           <!-- 失败状态 -->
           <div v-else-if="image.status === 'error'" class="image-placeholder error-placeholder">
             <div class="error-icon">!</div>
-            <div class="status-text">生成失败</div>
+            <div class="status-text">{{ t('generating.status.failed') }}</div>
             <button
               class="retry-btn"
               @click="retrySingleImage(image.index)"
               :disabled="isRetrying"
             >
-              点击重试
+              {{ t('generating.actions.retry') }}
             </button>
           </div>
 
           <!-- 等待中状态 -->
           <div v-else class="image-placeholder">
-            <div class="status-text">等待中</div>
+            <div class="status-text">{{ t('generating.status.waiting') }}</div>
           </div>
 
           <!-- 底部信息栏 -->
           <div class="image-footer">
-            <span class="page-label">Page {{ image.index + 1 }}</span>
+            <span class="page-label">{{ t('generating.pageLabel', { index: image.index + 1 }) }}</span>
             <span class="status-badge" :class="image.status">
               {{ getStatusText(image.status) }}
             </span>
@@ -98,9 +98,11 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { useGeneratorStore } from '../stores/generator'
 import { generateImagesPost, regenerateImage as apiRegenerateImage, retryFailedImages as apiRetryFailed, createHistory, updateHistory, getImageUrl } from '../api'
 
+const { t } = useI18n()
 const router = useRouter()
 const store = useGeneratorStore()
 
@@ -120,12 +122,12 @@ const failedCount = computed(() => store.images.filter(img => img.status === 'er
 
 const getStatusText = (status: string) => {
   const texts: Record<string, string> = {
-    generating: '生成中',
-    done: '已完成',
-    error: '失败',
-    retrying: '重试中'
+    generating: t('generating.status.generating'),
+    done: t('generating.status.completed'),
+    error: t('generating.status.error'),
+    retrying: t('generating.status.retrying')
   }
-  return texts[status] || '等待中'
+  return texts[status] || t('generating.status.waiting')
 }
 
 // 重试单张图片（异步并发执行，不阻塞）
@@ -201,12 +203,12 @@ async function retryAllFailed() {
       (err) => {
         console.error('重试失败:', err)
         isRetrying.value = false
-        error.value = '重试失败: ' + err.message
+        error.value = t('generating.errors.retryFailed') + err.message
       }
     )
   } catch (e) {
     isRetrying.value = false
-    error.value = '重试失败: ' + String(e)
+    error.value = t('generating.errors.retryFailed') + String(e)
   }
 }
 
@@ -314,7 +316,7 @@ onMounted(async () => {
     // onStreamError
     (err) => {
       console.error('Stream Error:', err)
-      error.value = '生成失败: ' + err.message
+      error.value = t('generating.errors.generateFailed') + err.message
     },
     // userImages - 用户上传的参考图片
     store.userImages.length > 0 ? store.userImages : undefined,

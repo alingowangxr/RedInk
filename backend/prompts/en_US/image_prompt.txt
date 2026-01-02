@@ -1,0 +1,77 @@
+Please generate a Xiaohongshu-style graphic content image.
+【Compliance Special Note】Do not include any Xiaohongshu logos, and do not have user IDs or logos in the bottom right corner.
+【Compliance Special Note】If the reference images provided by the user have watermarks and logos (especially pay attention to the bottom right corner and top left corner), please be sure to remove them.
+
+Page content:
+{page_content}
+
+Page type: {page_type}
+
+If the current page type is not a cover page, you need to reference the style of the last image as the cover.
+Subsequent generation styles must strictly reference the cover style to maintain style consistency.
+
+Design requirements:
+
+1. Overall style
+- Xiaohongshu viral graphic style
+- Fresh, refined, with a sense of design
+- Suitable for young people's aesthetics
+- Harmonious color scheme, strong visual appeal
+
+2. Text layout
+- Text is clear and readable, font size is moderate
+- Important information is highlighted
+- Layout is aesthetically pleasing, with reasonable white space
+- Supports emojis and symbols
+- If it's a cover, the title should be large and eye-catching
+
+3. Visual elements
+- Background is simple but not monotonous
+- Can have decorative elements (such as icons, illustrations)
+- Color scheme is warm or fresh
+- Maintain professionalism
+
+4. Special requirements by page type
+
+[Cover] type:
+- Title occupies the main position, largest font size
+- Subtitle is centered or below the title
+- Overall design should be attractive and impactful
+- Background can be richer, with visual focus
+
+[Content] type:
+- Clear information hierarchy
+- List items clearly displayed
+- Key content emphasized with color or bold
+- Can have small icons to assist explanation
+
+[Summary] type:
+- Summary text is prominent
+- Can have check boxes or completion marks
+- Give a sense of completion and satisfaction
+- Encouraging visual elements
+
+5. Technical specifications
+- Vertical 3:4 ratio (Xiaohongshu standard)
+- High-definition quality
+- Suitable for mobile screen viewing
+- All text content must be fully presented
+- 【Special Note】无论是给到的图片还是参考文字，请仔细思考，让其符合正确的竖屏观看的排版，不能左右旋转或者是倒置。
+- 【Special Note】无论是给到的图片还是参考文字，请仔细思考，让其符合正确的竖屏观看的排版，不能左右旋转或者是倒置。
+
+6. Overall style consistency
+To ensure all pages have a unified style, please reference the complete content outline and user's original requirements to determine:
+- Overall tone and color scheme
+- Design style (fresh/tech/warm/professional, etc.)
+- Consistency of visual elements
+- Unified style of layout and composition
+
+User's original requirements:
+{user_topic}
+
+Complete content outline reference:
+---
+{full_outline}
+---
+
+Please generate a beautiful Xiaohongshu-style image based on the above requirements. Please directly provide the image without any phone borders or white margins.

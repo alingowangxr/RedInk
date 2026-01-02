@@ -1,0 +1,321 @@
+export default {
+  // 通用
+  common: {
+    confirm: '確定',
+    cancel: '取消',
+    save: '儲存',
+    delete: '刪除',
+    download: '下載',
+    loading: '載入中...',
+    success: '成功',
+    error: '錯誤',
+    edit: '編輯',
+    add: '新增',
+    remove: '移除',
+    search: '搜尋',
+    filter: '篩選',
+    reset: '重設',
+    submit: '提交',
+    close: '關閉',
+    back: '返回',
+    next: '下一步',
+    previous: '上一步',
+    finish: '完成',
+    retry: '重試',
+    copy: '複製',
+    copied: '已複製',
+    preview: '預覽',
+    // 無障礙和 Alt 文本
+    pageNumber: '第 {index} 頁',
+    imageNumber: '圖片 {index}',
+    coverNumber: '封面 {index}',
+    logoAlt: '紅墨 - 靈感一觸即發',
+  },
+
+  // 導航
+  nav: {
+    home: '創作中心',
+    history: '歷史記錄',
+    settings: '系統設定',
+  },
+
+  // 首頁
+  home: {
+    brandPill: 'AI 驅動的紅墨創作助手',
+    title: '靈感一觸即發',
+    subtitle: '輸入你的創意主題，讓 AI 幫你生成爆款標題、正文和封面圖',
+    slogan: '讓傳播不再需要門檻，讓創作從未如此簡單',
+    placeholder: '輸入主題，例如：秋季顯白美甲...',
+    generateButton: '生成大綱',
+    uploadHint: '這些圖片將用於生成封面和內容參考',
+    errors: {
+      generateFailed: '生成大綱失敗',
+      networkError: '網路錯誤，請重試',
+      createHistoryFailed: '建立歷史記錄失敗：',
+      createHistoryException: '建立歷史記錄異常：',
+    },
+  },
+
+  // 輸入組件
+  composer: {
+    placeholder: '輸入主題，例如：秋季顯白美甲...',
+    uploadHint: '這些圖片將用於生成封面和內容參考',
+    generateButton: '生成大綱',
+  },
+
+  // 大綱編輯
+  outline: {
+    title: '編輯大綱',
+    subtitle: '調整頁面順序，修改文案，打造完美內容',
+    pageCount: '共 {count} 頁',
+    addPage: '新增頁面',
+    deletePage: '刪除頁面',
+    deleteConfirm: '確定要刪除這一頁嗎？',
+    generateImages: '開始生成圖片',
+    backButton: '上一步',
+    savingStatus: '儲存中...',
+    savedStatus: '已儲存',
+    placeholder: '在此輸入文案...',
+    characterCount: '{count} 字',
+    pageType: {
+      cover: '封面',
+      content: '內容',
+      summary: '總結',
+    },
+  },
+
+  // 生成進度
+  generating: {
+    title: '生成結果',
+    progressTitle: '生成進度',
+    currentProgress: '正在生成第 {current} / {total} 頁',
+    failedCount: '{count} 張圖片生成失敗，可點擊重試',
+    completedAll: '全部 {total} 張圖片生成完成',
+    retryingAll: '補全中...',
+    retryAllButton: '一鍵補全失敗圖片',
+    backToOutline: '返回大綱',
+    status: {
+      generating: '生成中...',
+      retrying: '重試中...',
+      failed: '生成失敗',
+      waiting: '等待中',
+      completed: '已完成',
+      error: '失敗',
+    },
+    actions: {
+      retry: '點擊重試',
+      regenerate: '重新生成',
+    },
+    pageLabel: 'Page {index}',
+    errors: {
+      generateFailed: '生成失敗：',
+      retryFailed: '重試失敗：',
+    },
+  },
+
+  // 結果頁
+  result: {
+    title: '創作完成',
+    subtitle: '恭喜！你的小紅書圖文已生成完畢，共 {count} 張',
+    downloadAll: '一鍵下載',
+    regenerate: '重新生成',
+    regenerating: '重繪中...',
+    startOver: '再來一篇',
+    preview: '預覽大圖',
+    download: '下載',
+    pageLabel: 'Page {index}',
+    errors: {
+      pageNotFound: '無法找到對應頁面的內容',
+      regenerateFailed: '重繪失敗：',
+    },
+    content: {
+      generateButton: '生成標題、文案和標籤',
+      generating: '生成中...',
+      retry: '重新生成',
+      title: '標題',
+      copywriting: '文案',
+      tags: '標籤',
+      generatingStatus: '正在生成標題、文案和標籤...',
+      failedStatus: '生成失敗，請重試',
+      titleLabel: {
+        recommended: '推薦',
+        alternative: '備選{index}',
+      },
+      copyAll: '複製全部',
+      copyTitle: '點擊複製',
+    },
+  },
+
+  // 歷史記錄
+  history: {
+    title: '我的創作',
+    newProject: '新建圖文',
+    syncHistory: '同步歷史',
+    syncing: '同步中...',
+    searchPlaceholder: '搜尋標題...',
+    tabs: {
+      all: '全部',
+      completed: '已完成',
+      draft: '草稿箱',
+    },
+    stats: {
+      total: '總作品數',
+      completed: '已完成',
+      draft: '草稿箱',
+    },
+    empty: '暫無相關記錄',
+    emptyTip: '去建立一個新的作品吧',
+    status: {
+      draft: '草稿',
+      completed: '已完成',
+      generating: '生成中',
+    },
+    actions: {
+      preview: '預覽',
+      edit: '編輯',
+      viewOutline: '查看大綱',
+      download: '打包下載',
+      regenerate: '重新生成',
+      delete: '刪除',
+    },
+    deleteConfirm: '確定刪除嗎？',
+    pagination: {
+      previous: 'Previous',
+      next: 'Next',
+    },
+    errors: {
+      regenerateNoTask: '無法重新生成：缺少任務資訊',
+      regenerateFailed: '重新生成失敗：',
+    },
+    scan: {
+      title: '掃描完成！',
+      totalTasks: '總任務數：',
+      syncSuccess: '同步成功：',
+      syncFailed: '同步失敗：',
+      orphanTasks: '孤立任務（無記錄）：',
+      scanFailed: '掃描失敗：',
+    },
+    gallery: {
+      imageCount: '{count} 張圖片 ·',
+      expand: '展開',
+      collapse: '收起',
+      waiting: 'Waiting...',
+    },
+    outlineModal: {
+      title: '完整大綱',
+      characterCount: '{count} 字',
+    },
+  },
+
+  // 系統設定
+  settings: {
+    title: '系統設定',
+    subtitle: '配置文字生成和圖片生成的 API 服務',
+    loadingConfig: '載入配置中...',
+    textGeneration: {
+      title: '文字生成配置',
+      description: '用於生成小紅書圖文大綱',
+    },
+    imageGeneration: {
+      title: '圖片生成配置',
+      description: '用於生成小紅書配圖',
+    },
+    addProvider: '新增',
+    testConnection: '測試連線',
+    testing: '測試中...',
+    save: '儲存',
+    cancel: '取消',
+    provider: {
+      status: '狀態',
+      name: '名稱',
+      model: '模型',
+      apiKey: 'API Key',
+      actions: '操作',
+      active: '已啟用',
+      activate: '啟用',
+      unconfigured: '未配置',
+      edit: '編輯',
+      delete: '刪除',
+      modalTitle: {
+        add: '新增服務商',
+        edit: '編輯服務商',
+      },
+      form: {
+        name: '服務商名稱',
+        namePlaceholder: '例如: openai',
+        nameHint: '唯一識別碼，用於區分不同服務商',
+        type: '類型',
+        typeOptions: {
+          openai: 'OpenAI 相容介面',
+          googleGemini: 'Google Gemini',
+          googleGenai: 'Google GenAI',
+        },
+        apiKey: 'API Key',
+        apiKeyPlaceholder: '輸入 API Key',
+        apiKeyConfigured: '已配置 API Key，留空表示不修改',
+        baseUrl: 'Base URL',
+        baseUrlPlaceholder: {
+          openai: '例如: https://api.openai.com',
+          gemini: '例如: https://generativelanguage.googleapis.com',
+        },
+        baseUrlPreview: '預覽：',
+        model: '模型',
+        modelPlaceholder: {
+          openai: '例如: gpt-4o',
+          gemini: '例如: gemini-2.0-flash-exp',
+          image: '例如: imagen-3.0-generate-002',
+          imageApi: '例如: flux-pro',
+        },
+        endpoint: 'API 端點路徑',
+        endpointPlaceholder: {
+          text: '例如: /v1/chat/completions',
+          image: '例如: /v1/images/generations 或 /v1/chat/completions',
+        },
+        endpointHint: {
+          text: '預設端點：/v1/chat/completions（大多數 OpenAI 相容 API 使用此端點）',
+          image: '常用端點：/v1/images/generations（標準圖片生成）、/v1/chat/completions（即夢等返回連結的 API）',
+        },
+        highConcurrency: '高並發模式',
+        highConcurrencyHint: '啟用後將並行生成圖片，速度更快但對 API 品質要求較高。GCP 300$ 試用帳號不建議啟用。',
+        shortPrompt: '短 Prompt 模式',
+        shortPromptHint: '啟用後使用精簡版提示詞，適合有字元限制的 API（如即夢 1600 字元限制）。',
+      },
+      validation: {
+        nameRequired: '請填寫服務商名稱',
+        typeRequired: '請選擇服務商類型',
+        apiKeyRequired: '請填寫 API Key',
+      },
+      deleteConfirm: '確定要刪除服務商 "{name}" 嗎？',
+      testSuccess: '✅ ',
+      testFailed: '❌ 連線失敗：',
+      loadConfigFailed: '載入配置失敗：',
+      autoSaveFailed: '自動儲存失敗:',
+    },
+  },
+
+  // 錯誤訊息
+  errors: {
+    networkError: '網路連線失敗，請檢查網路設定',
+    timeout: '請求逾時，請檢查網路連線',
+    createHistoryFailed: '建立歷史記錄失敗',
+    getHistoryListFailed: '取得歷史記錄清單失敗',
+    historyNotFound: '歷史記錄不存在',
+    getHistoryDetailFailed: '取得歷史記錄詳情失敗',
+    updateHistoryFailed: '更新歷史記錄失敗',
+    deleteHistoryFailed: '刪除歷史記錄失敗',
+    searchHistoryFailed: '搜尋歷史記錄失敗',
+    getStatsFailed: '取得統計資訊失敗',
+    unknownError: '未知錯誤，請稍後重試',
+    cannotReadStream: '無法讀取回應流',
+    parseSSEFailed: '解析 SSE 資料失敗:',
+    httpError: 'HTTP error! status: {status}',
+  },
+
+  // 頁尾
+  footer: {
+    tip: '配置不成功？訪問',
+    tipLink: '官方站點即刻體驗',
+    copyright: '© 2025 RedInk by 默子 (Histone)',
+    license: 'Licensed under',
+  },
+}

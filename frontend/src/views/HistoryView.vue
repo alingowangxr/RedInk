@@ -4,7 +4,7 @@
     <!-- Header Area -->
     <div class="page-header">
       <div>
-        <h1 class="page-title">我的创作</h1>
+        <h1 class="page-title">{{ t('history.title') }}</h1>
       </div>
       <div style="display: flex; gap: 10px;">
         <button
@@ -15,11 +15,11 @@
         >
           <svg v-if="!isScanning" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M23 4v6h-6"></path><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
           <div v-else class="spinner-small" style="margin-right: 6px;"></div>
-          {{ isScanning ? '同步中...' : '同步历史' }}
+          {{ isScanning ? t('history.syncing') : t('history.syncHistory') }}
         </button>
         <button class="btn btn-primary" @click="router.push('/')">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-          新建图文
+          {{ t('history.newProject') }}
         </button>
       </div>
     </div>
@@ -35,21 +35,21 @@
           :class="{ active: currentTab === 'all' }"
           @click="switchTab('all')"
         >
-          全部
+          {{ t('history.tabs.all') }}
         </div>
         <div
           class="tab-item"
           :class="{ active: currentTab === 'completed' }"
           @click="switchTab('completed')"
         >
-          已完成
+          {{ t('history.tabs.completed') }}
         </div>
         <div
           class="tab-item"
           :class="{ active: currentTab === 'draft' }"
           @click="switchTab('draft')"
         >
-          草稿箱
+          {{ t('history.tabs.draft') }}
         </div>
       </div>
 
@@ -58,7 +58,7 @@
         <input
           v-model="searchKeyword"
           type="text"
-          placeholder="搜索标题..."
+          :placeholder="t('history.searchPlaceholder')"
           @keyup.enter="handleSearch"
         />
       </div>
@@ -73,8 +73,8 @@
       <div class="empty-img">
         <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
       </div>
-      <h3>暂无相关记录</h3>
-      <p class="empty-tips">去创建一个新的作品吧</p>
+      <h3>{{ t('history.empty') }}</h3>
+      <p class="empty-tips">{{ t('history.emptyTip') }}</p>
     </div>
 
     <div v-else class="gallery-grid">
@@ -90,9 +90,9 @@
 
     <!-- Pagination -->
     <div v-if="totalPages > 1" class="pagination-wrapper">
-       <button class="page-btn" :disabled="currentPage === 1" @click="changePage(currentPage - 1)">Previous</button>
+       <button class="page-btn" :disabled="currentPage === 1" @click="changePage(currentPage - 1)">{{ t('history.pagination.previous') }}</button>
        <span class="page-indicator">{{ currentPage }} / {{ totalPages }}</span>
-       <button class="page-btn" :disabled="currentPage === totalPages" @click="changePage(currentPage + 1)">Next</button>
+       <button class="page-btn" :disabled="currentPage === totalPages" @click="changePage(currentPage + 1)">{{ t('history.pagination.next') }}</button>
     </div>
 
     <!-- Image Viewer Modal -->
@@ -122,6 +122,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import {
   getHistoryList,
   getHistoryStats,
@@ -141,6 +142,7 @@ import GalleryCard from '../components/history/GalleryCard.vue'
 import ImageGalleryModal from '../components/history/ImageGalleryModal.vue'
 import OutlineModal from '../components/history/OutlineModal.vue'
 
+const { t } = useI18n()
 const router = useRouter()
 const route = useRoute()
 const store = useGeneratorStore()
@@ -263,7 +265,7 @@ function closeGallery() {
  * 确认删除
  */
 async function confirmDelete(record: any) {
-  if(confirm('确定删除吗？')) {
+  if(confirm(t('history.deleteConfirm'))) {
     await deleteHistory(record.id)
     loadData()
     loadStats()
@@ -283,7 +285,7 @@ function changePage(p: number) {
  */
 async function regenerateHistoryImage(index: number) {
   if (!viewingRecord.value || !viewingRecord.value.images.task_id) {
-    alert('无法重新生成：缺少任务信息')
+    alert(t('history.errors.regenerateNoTask'))
     return
   }
 
@@ -327,11 +329,11 @@ async function regenerateHistoryImage(index: number) {
       regeneratingImages.value.delete(index)
     } else {
       regeneratingImages.value.delete(index)
-      alert('重新生成失败: ' + (result.error || '未知错误'))
+      alert(t('history.errors.regenerateFailed') + (result.error || ''))
     }
   } catch (e) {
     regeneratingImages.value.delete(index)
-    alert('重新生成失败: ' + String(e))
+    alert(t('history.errors.regenerateFailed') + String(e))
   }
 }
 
@@ -364,24 +366,24 @@ async function handleScanAll() {
   try {
     const result = await scanAllTasks()
     if (result.success) {
-      let message = `扫描完成！\n`
-      message += `- 总任务数: ${result.total_tasks || 0}\n`
-      message += `- 同步成功: ${result.synced || 0}\n`
-      message += `- 同步失败: ${result.failed || 0}\n`
+      let message = `${t('history.scan.title')}\n`
+      message += `${t('history.scan.totalTasks')}${result.total_tasks || 0}\n`
+      message += `${t('history.scan.syncSuccess')}${result.synced || 0}\n`
+      message += `${t('history.scan.syncFailed')}${result.failed || 0}\n`
 
       if (result.orphan_tasks && result.orphan_tasks.length > 0) {
-        message += `- 孤立任务（无记录）: ${result.orphan_tasks.length} 个\n`
+        message += `${t('history.scan.orphanTasks')}${result.orphan_tasks.length}\n`
       }
 
       alert(message)
       await loadData()
       await loadStats()
     } else {
-      alert('扫描失败: ' + (result.error || '未知错误'))
+      alert(t('history.scan.scanFailed') + (result.error || ''))
     }
   } catch (e) {
     console.error('扫描失败:', e)
-    alert('扫描失败: ' + String(e))
+    alert(t('history.scan.scanFailed') + String(e))
   } finally {
     isScanning.value = false
   }

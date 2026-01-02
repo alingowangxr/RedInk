@@ -3,27 +3,27 @@
   <div v-if="visible" class="modal-overlay" @click="$emit('close')">
     <div class="modal-content" @click.stop>
       <div class="modal-header">
-        <h3>{{ isEditing ? '编辑服务商' : '添加服务商' }}</h3>
+        <h3>{{ isEditing ? t('settings.provider.modalTitle.edit') : t('settings.provider.modalTitle.add') }}</h3>
         <button class="close-btn" @click="$emit('close')">×</button>
       </div>
 
       <div class="modal-body">
         <!-- 服务商名称（仅添加时显示） -->
         <div class="form-group" v-if="!isEditing">
-          <label>服务商名称</label>
+          <label>{{ t('settings.provider.form.name') }}</label>
           <input
             type="text"
             class="form-input"
             :value="formData.name"
             @input="updateField('name', ($event.target as HTMLInputElement).value)"
-            placeholder="例如: openai"
+            :placeholder="t('settings.provider.form.namePlaceholder')"
           />
-          <span class="form-hint">唯一标识，用于区分不同服务商</span>
+          <span class="form-hint">{{ t('settings.provider.form.nameHint') }}</span>
         </div>
 
         <!-- 类型选择 -->
         <div class="form-group">
-          <label>类型</label>
+          <label>{{ t('settings.provider.form.type') }}</label>
           <select
             class="form-select"
             :value="formData.type"
@@ -37,22 +37,22 @@
 
         <!-- API Key -->
         <div class="form-group">
-          <label>API Key</label>
+          <label>{{ t('settings.provider.form.apiKey') }}</label>
           <input
             type="text"
             class="form-input"
             :value="formData.api_key"
             @input="updateField('api_key', ($event.target as HTMLInputElement).value)"
-            :placeholder="isEditing && formData._has_api_key ? formData.api_key_masked : '输入 API Key'"
+            :placeholder="isEditing && formData._has_api_key ? formData.api_key_masked : t('settings.provider.form.apiKeyPlaceholder')"
           />
           <span class="form-hint" v-if="isEditing && formData._has_api_key">
-            已配置 API Key，留空表示不修改
+            {{ t('settings.provider.form.apiKeyConfigured') }}
           </span>
         </div>
 
         <!-- Base URL -->
         <div class="form-group" v-if="showBaseUrl">
-          <label>Base URL</label>
+          <label>{{ t('settings.provider.form.baseUrl') }}</label>
           <input
             type="text"
             class="form-input"
@@ -61,13 +61,13 @@
             :placeholder="baseUrlPlaceholder"
           />
           <span class="form-hint" v-if="previewUrl">
-            预览: {{ previewUrl }}
+            {{ t('settings.provider.form.baseUrlPreview') }} {{ previewUrl }}
           </span>
         </div>
 
         <!-- 模型 -->
         <div class="form-group">
-          <label>模型</label>
+          <label>{{ t('settings.provider.form.model') }}</label>
           <input
             type="text"
             class="form-input"
@@ -79,32 +79,32 @@
 
         <!-- 端点路径（仅 OpenAI 兼容接口） -->
         <div class="form-group" v-if="showEndpointType">
-          <label>API 端点路径</label>
+          <label>{{ t('settings.provider.form.endpoint') }}</label>
           <input
             type="text"
             class="form-input"
             :value="formData.endpoint_type"
             @input="updateField('endpoint_type', ($event.target as HTMLInputElement).value)"
-            placeholder="例如: /v1/chat/completions"
+            :placeholder="t('settings.provider.form.endpointPlaceholder.text')"
           />
           <span class="form-hint">
-            默认端点：/v1/chat/completions（大多数 OpenAI 兼容 API 使用此端点）
+            {{ t('settings.provider.form.endpointHint.text') }}
           </span>
         </div>
       </div>
 
       <div class="modal-footer">
-        <button class="btn" @click="$emit('close')">取消</button>
+        <button class="btn" @click="$emit('close')">{{ t('common.cancel') }}</button>
         <button
           class="btn btn-secondary"
           @click="$emit('test')"
           :disabled="testing || (!formData.api_key && !isEditing)"
         >
           <span v-if="testing" class="spinner-small"></span>
-          {{ testing ? '测试中...' : '测试连接' }}
+          {{ testing ? t('settings.testing') : t('settings.testConnection') }}
         </button>
         <button class="btn btn-primary" @click="$emit('save')">
-          {{ isEditing ? '保存' : '添加' }}
+          {{ isEditing ? t('settings.save') : t('settings.addProvider') }}
         </button>
       </div>
     </div>
@@ -113,6 +113,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 /**
  * 服务商编辑/添加弹窗组件
@@ -122,6 +123,8 @@ import { computed } from 'vue'
  * - 编辑现有服务商
  * - 测试连接
  */
+
+const { t } = useI18n()
 
 // 定义表单数据类型
 interface FormData {
@@ -182,9 +185,9 @@ const baseUrlPlaceholder = computed(() => {
   switch (props.formData.type) {
     case 'google_gemini':
     case 'google_genai':
-      return '例如: https://generativelanguage.googleapis.com'
+      return t('settings.provider.form.baseUrlPlaceholder.gemini')
     default:
-      return '例如: https://api.openai.com'
+      return t('settings.provider.form.baseUrlPlaceholder.openai')
   }
 })
 
@@ -192,13 +195,13 @@ const baseUrlPlaceholder = computed(() => {
 const modelPlaceholder = computed(() => {
   switch (props.formData.type) {
     case 'google_gemini':
-      return '例如: gemini-2.0-flash-exp'
+      return t('settings.provider.form.modelPlaceholder.gemini')
     case 'google_genai':
-      return '例如: imagen-3.0-generate-002'
+      return t('settings.provider.form.modelPlaceholder.image')
     case 'image_api':
-      return '例如: flux-pro'
+      return t('settings.provider.form.modelPlaceholder.imageApi')
     default:
-      return '例如: gpt-4o'
+      return t('settings.provider.form.modelPlaceholder.openai')
   }
 })
 

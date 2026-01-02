@@ -9,6 +9,7 @@ import time
 import logging
 from flask import Blueprint, request, jsonify
 from backend.services.content import get_content_service
+from backend.i18n import gettext as _
 from .utils import log_request, log_error
 
 logger = logging.getLogger(__name__)
@@ -47,14 +48,14 @@ def create_content_blueprint():
                 logger.warning("内容生成请求缺少 topic 参数")
                 return jsonify({
                     "success": False,
-                    "error": "参数错误：topic 不能为空。\n请提供主题内容。"
+                    "error": _('topic_required_content')
                 }), 400
 
             if not outline:
                 logger.warning("内容生成请求缺少 outline 参数")
                 return jsonify({
                     "success": False,
-                    "error": "参数错误：outline 不能为空。\n请先生成大纲。"
+                    "error": _('outline_required')
                 }), 400
 
             # 调用内容生成服务
@@ -76,7 +77,7 @@ def create_content_blueprint():
             error_msg = str(e)
             return jsonify({
                 "success": False,
-                "error": f"内容生成异常。\n错误详情: {error_msg}\n建议：检查后端日志获取更多信息"
+                "error": _('content_exception', error=error_msg)
             }), 500
 
     return content_bp

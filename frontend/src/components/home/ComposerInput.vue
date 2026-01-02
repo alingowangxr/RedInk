@@ -13,7 +13,7 @@
         :value="modelValue"
         @input="handleInput"
         class="composer-textarea"
-        placeholder="输入主题，例如：秋季显白美甲..."
+        :placeholder="t('composer.placeholder')"
         @keydown.enter.prevent="handleEnter"
         :disabled="loading"
         rows="1"
@@ -27,7 +27,7 @@
         :key="idx"
         class="uploaded-image-item"
       >
-        <img :src="img.preview" :alt="`图片 ${idx + 1}`" />
+        <img :src="img.preview" :alt="t('common.imageNumber', { index: idx + 1 })" />
         <button class="remove-image-btn" @click="removeImage(idx)">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -67,7 +67,7 @@
           :disabled="!modelValue.trim() || loading"
         >
           <span v-if="loading" class="spinner-sm"></span>
-          <span v-else>生成大纲</span>
+          <span v-else>{{ t('composer.generateButton') }}</span>
         </button>
       </div>
     </div>
@@ -76,6 +76,7 @@
 
 <script setup lang="ts">
 import { ref, onUnmounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 /**
  * 主题输入组合框组件
@@ -85,6 +86,8 @@ import { ref, onUnmounted } from 'vue'
  * - 参考图片上传（最多5张）
  * - 生成按钮
  */
+
+const { t } = useI18n()
 
 // 定义上传的图片类型
 interface UploadedImage {

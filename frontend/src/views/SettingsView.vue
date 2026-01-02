@@ -1,13 +1,13 @@
 <template>
   <div class="container">
     <div class="page-header">
-      <h1 class="page-title">系统设置</h1>
-      <p class="page-subtitle">配置文本生成和图片生成的 API 服务</p>
+      <h1 class="page-title">{{ t('settings.title') }}</h1>
+      <p class="page-subtitle">{{ t('settings.subtitle') }}</p>
     </div>
 
     <div v-if="loading" class="loading-container">
       <div class="spinner"></div>
-      <p>加载配置中...</p>
+      <p>{{ t('settings.loadingConfig') }}</p>
     </div>
 
     <div v-else class="settings-container">
@@ -15,15 +15,15 @@
       <div class="card">
         <div class="section-header">
           <div>
-            <h2 class="section-title">文本生成配置</h2>
-            <p class="section-desc">用于生成小红书图文大纲</p>
+            <h2 class="section-title">{{ t('settings.textGeneration.title') }}</h2>
+            <p class="section-desc">{{ t('settings.textGeneration.description') }}</p>
           </div>
           <button class="btn btn-small" @click="openAddTextModal">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <line x1="12" y1="5" x2="12" y2="19"></line>
               <line x1="5" y1="12" x2="19" y2="12"></line>
             </svg>
-            添加
+            {{ t('settings.addProvider') }}
           </button>
         </div>
 
@@ -42,15 +42,15 @@
       <div class="card">
         <div class="section-header">
           <div>
-            <h2 class="section-title">图片生成配置</h2>
-            <p class="section-desc">用于生成小红书配图</p>
+            <h2 class="section-title">{{ t('settings.imageGeneration.title') }}</h2>
+            <p class="section-desc">{{ t('settings.imageGeneration.description') }}</p>
           </div>
           <button class="btn btn-small" @click="openAddImageModal">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <line x1="12" y1="5" x2="12" y2="19"></line>
               <line x1="5" y1="12" x2="19" y2="12"></line>
             </svg>
-            添加
+            {{ t('settings.addProvider') }}
           </button>
         </div>
 
@@ -97,6 +97,7 @@
 
 <script setup lang="ts">
 import { onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import ProviderTable from '../components/settings/ProviderTable.vue'
 import ProviderModal from '../components/settings/ProviderModal.vue'
 import ImageProviderModal from '../components/settings/ImageProviderModal.vue'
@@ -105,6 +106,8 @@ import {
   textTypeOptions,
   imageTypeOptions
 } from '../composables/useProviderForm'
+
+const { t } = useI18n()
 
 /**
  * 系统设置页面

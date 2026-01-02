@@ -2,20 +2,20 @@
   <div class="container" style="max-width: 100%;">
     <div class="page-header" style="max-width: 1200px; margin: 0 auto 30px auto;">
       <div>
-        <h1 class="page-title">编辑大纲</h1>
+        <h1 class="page-title">{{ t('outline.title') }}</h1>
         <p class="page-subtitle">
-          调整页面顺序，修改文案，打造完美内容
-          <span v-if="isSaving" class="save-indicator saving">保存中...</span>
-          <span v-else class="save-indicator saved">已保存</span>
+          {{ t('outline.subtitle') }}
+          <span v-if="isSaving" class="save-indicator saving">{{ t('outline.savingStatus') }}</span>
+          <span v-else class="save-indicator saved">{{ t('outline.savedStatus') }}</span>
         </p>
       </div>
       <div style="display: flex; gap: 12px;">
         <button class="btn btn-secondary" @click="goBack" style="background: white; border: 1px solid var(--border-color);">
-          上一步
+          {{ t('outline.backButton') }}
         </button>
         <button class="btn btn-primary" @click="startGeneration">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path><line x1="16" y1="8" x2="2" y2="22"></line><line x1="17.5" y1="15" x2="9" y2="15"></line></svg>
-          开始生成图片
+          {{ t('outline.generateImages') }}
         </button>
       </div>
     </div>
@@ -51,18 +51,18 @@
         <textarea
           v-model="page.content"
           class="textarea-paper"
-          placeholder="在此输入文案..."
+          :placeholder="t('outline.placeholder')"
           @input="store.updatePage(page.index, page.content)"
         />
-        
-        <div class="word-count">{{ page.content.length }} 字</div>
+
+        <div class="word-count">{{ t('outline.characterCount', { count: page.content.length }) }}</div>
       </div>
 
       <!-- 添加按钮卡片 -->
       <div class="card add-card-dashed" @click="addPage('content')">
         <div class="add-content">
           <div class="add-icon">+</div>
-          <span>添加页面</span>
+          <span>{{ t('outline.addPage') }}</span>
         </div>
       </div>
     </div>
@@ -74,9 +74,11 @@
 <script setup lang="ts">
 import { ref, nextTick, watch, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { useGeneratorStore } from '../stores/generator'
 import { updateHistory, createHistory } from '../api'
 
+const { t } = useI18n()
 const router = useRouter()
 const store = useGeneratorStore()
 
@@ -87,11 +89,11 @@ const isSaving = ref(false)
 
 const getPageTypeName = (type: string) => {
   const names = {
-    cover: '封面',
-    content: '内容',
-    summary: '总结'
+    cover: t('outline.pageType.cover'),
+    content: t('outline.pageType.content'),
+    summary: t('outline.pageType.summary')
   }
-  return names[type as keyof typeof names] || '内容'
+  return names[type as keyof typeof names] || t('outline.pageType.content')
 }
 
 // 拖拽逻辑
@@ -117,7 +119,7 @@ const onDrop = (e: DragEvent, index: number) => {
 }
 
 const deletePage = (index: number) => {
-  if (confirm('确定要删除这一页吗？')) {
+  if (confirm(t('outline.deleteConfirm'))) {
     store.deletePage(index)
   }
 }
